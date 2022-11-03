@@ -66,7 +66,10 @@ function selectColor(){
 
 // Fill all uncolored cells
 function fillU(){
-
+    let unfilledCells = document.querySelectorAll("td.White");
+    for (let i = 0; i < unfilledCells.length; i++) { // for every unfilled table cell
+        unfilledCells[i].classList.replace("White", colorSelected) // fill in with the color selected
+    }
 
 }
 
