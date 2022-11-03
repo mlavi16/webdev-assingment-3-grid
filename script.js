@@ -31,7 +31,7 @@ function addC() {
 // Add a table cell
 function addCell(row) {
     let cell = row.insertCell(-1);
-    cell.classList.add("White");
+    cell.classList.add("Uncolored");
 }
 
 // Remove a row
@@ -66,9 +66,9 @@ function selectColor(){
 
 // Fill all uncolored cells
 function fillU(){
-    let unfilledCells = document.querySelectorAll("td.White");
-    for (let i = 0; i < unfilledCells.length; i++) { // for every unfilled table cell
-        unfilledCells[i].classList.replace("White", colorSelected) // fill in with the color selected
+    let uncoloredCells = document.querySelectorAll("td.Uncolored");
+    for (let i = 0; i < uncoloredCells.length; i++) { // for every unfilled table cell
+        uncoloredCells[i].classList.replace("Uncolored", colorSelected) // fill in with the color selected
     }
 
 }
