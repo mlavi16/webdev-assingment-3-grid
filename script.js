@@ -47,11 +47,9 @@ function removeR() {
         // Remove a row if the table is not already empty
         grid.deleteRow(-1);
         numRows -= 1; // Update numRows var to accurately refluct the number of rows.
-    } else {
-        // Else update html to be reflect having an empty table
-        // (so the grid itself and the numCol/numRow counts agree)
-        emptyTable()
-    }
+    } 
+    // If all rows are deleted, update grid to be empty
+    deleteTableIfEmpty()
 }
 
 // Remove a column
@@ -63,18 +61,18 @@ function removeC() {
             rows[i].deleteCell(-1);
         }
         numCols -= 1; // Update numCols var to accurately refluct the number of columns.
-    } else {
-        // Else update html to be reflect having an empty table 
-        // (so the grid itself and the numCol/numRow counts agree)
-        emptyTable();
-    }
+    } 
+    // If all columns are deleted, update grid to be empty
+    deleteTableIfEmpty()
 }
 
-// Remove all table rows and columns
-function emptyTable() {
+// Remove all table rows/cols if numRows/numCols is 0
+function deleteTableIfEmpty() { 
+    if ((numCols == 0) || (numRows == 0)) {
         grid.innerHTML = "";
         numCols = 0;
         numRows = 0;
+    }
 }
 
 // Check if the table is empty based on row/column counts
