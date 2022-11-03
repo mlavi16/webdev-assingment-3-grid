@@ -66,9 +66,14 @@ function selectColor(){
 
 // Fill all uncolored cells
 function fillU(){
+    // if a color is not selected, prompt user for a color and do not fill in any cells
+    if ((colorSelected == "SELECT") || (colorSelected == undefined)) {
+        alert("Please select a color");
+        return;
+    }
     let uncoloredCells = document.querySelectorAll("td.Uncolored");
     for (let i = 0; i < uncoloredCells.length; i++) { // for every unfilled table cell
-        uncoloredCells[i].classList.replace("Uncolored", colorSelected) // fill in with the color selected
+        uncoloredCells[i].className = colorSelected; // fill in with the color selected
     }
 
 }
