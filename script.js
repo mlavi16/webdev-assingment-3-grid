@@ -32,6 +32,7 @@ function addC() {
 function addCell(row) {
     let cell = row.insertCell(-1);
     cell.classList.add("Uncolored");
+    cell.addEventListener("click", fillCell);
 }
 
 // Remove a row
@@ -64,11 +65,23 @@ function selectColor(){
     console.log(colorSelected);
 }
 
+// Fill in a selected cell
+function fillCell(){
+    // if a color is not selected, prompt user for a color and do not fill in the cells
+    if ((colorSelected == "SELECT") || (colorSelected == undefined)) {
+        alert("Please select a color to fill in this cell");
+        return;
+    }
+    // else fill in the cell with the selected color
+    this.className = colorSelected;
+}
+
+
 // Fill all uncolored cells
 function fillU(){
     // if a color is not selected, prompt user for a color and do not fill in any cells
     if ((colorSelected == "SELECT") || (colorSelected == undefined)) {
-        alert("Please select a color");
+        alert("Please select a color to fill in all uncolored cells");
         return;
     }
     let uncoloredCells = document.querySelectorAll("td.Uncolored");
@@ -82,7 +95,7 @@ function fillU(){
 function fillAll(){
     // if a color is not selected, prompt user for a color and do not fill in any cells
     if ((colorSelected == "SELECT") || (colorSelected == undefined)) {
-        alert("Please select a color");
+        alert("Please select a color to fill in all cells");
         return;
     }
     // else fill in all cells with selected color
