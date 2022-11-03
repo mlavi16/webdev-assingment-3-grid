@@ -7,10 +7,10 @@ let colorSelected;
 function addR() {
     let grid = document.getElementById("grid");
     let newRow = grid.insertRow(numRows); 
-    if (numCols == 0)
+    if (numCols == 0) // if table is empty
         numCols = 1;
     for (let i = 0; i < numCols; i++) {
-        let newCell = newRow.insertCell(i);
+        addCell(newRow);
     }
     numRows += 1;
 }
@@ -22,10 +22,16 @@ function addC() {
     else { // if table has at least one row/column
         let rows = document.getElementsByTagName("TR"); 
         for (let i = 0; i < numRows; i++) {
-            rows[i].insertCell(-1);
+            addCell(rows[i])
         }
         numCols += 1;
     }
+}
+
+// Add a table cell
+function addCell(row) {
+    let cell = row.insertCell(-1);
+    cell.classList.add("Uncolored");
 }
 
 // Remove a row
@@ -41,7 +47,15 @@ function removeR() {
 
 // Remove a column
 function removeC() {
-    alert("Clicked Remove Col"); // Replace this line with your code.
+    if (numCols > 0) { // if table isn't already empty
+        let rows = document.getElementsByTagName("TR"); 
+        for (let i = 0; i <numRows; i++) {
+            rows[i].deleteCell(-1);
+        }
+        numCols -= 1;
+    }
+    if (numCols == 0) // if table (cols) are empty
+        numRows = 0; // empty table (rows) as well
 }
 
 // Set global variable for selected color
@@ -52,7 +66,16 @@ function selectColor(){
 
 // Fill all uncolored cells
 function fillU(){
-    alert("Clicked Fill All Uncolored"); // Replace this line with your code.
+    // if a color is not selected, prompt user for a color and do not fill in any cells
+    if ((colorSelected == "SELECT") || (colorSelected == undefined)) {
+        alert("Please select a color");
+        return;
+    }
+    let uncoloredCells = document.querySelectorAll("td.Uncolored");
+    for (let i = 0; i < uncoloredCells.length; i++) { // for every unfilled table cell
+        uncoloredCells[i].className = colorSelected; // fill in with the color selected
+    }
+
 }
 
 // Fill all cells

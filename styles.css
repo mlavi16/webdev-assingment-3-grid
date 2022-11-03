@@ -5,5 +5,20 @@ tr,td{
 td{
     height: 50px;
     width: 50px;
+}
+
+td.Uncolored {
     background-color: white;
+}
+td.Red {
+    background-color: red;
+}
+td.Blue {
+    background-color: blue;
+}
+td.Green {
+    background-color: green;
+}
+td.Yellow {
+    background-color: yellow;
 }
