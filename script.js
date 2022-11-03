@@ -75,7 +75,10 @@ function fillU(){
 
 // Fill all cells
 function fillAll(){
-    alert("Clicked Fill All"); // Replace this line with your code.
+    let tableCells = document.querySelectorAll("td");
+    for (let i = 0; i < numCols * numRows; i++) { // for every table cell
+        tableCells[i].className = colorSelected; // fill in with the color selected
+    }
 }
 
 // Clear all cells
