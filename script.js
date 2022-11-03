@@ -41,9 +41,7 @@ function removeR() {
         document.getElementById("grid").deleteRow(-1);
         numRows -= 1;
     }
-    if (numRows == 0) // if table (rows) are empty
-        numCols = 0; // empty table (cols) as well
-
+    deleteTableIfEmpty();
 }
 
 // Remove a column
@@ -55,8 +53,15 @@ function removeC() {
         }
         numCols -= 1;
     }
-    if (numCols == 0) // if table (cols) are empty
-        numRows = 0; // empty table (rows) as well
+    deleteTableIfEmpty();
+}
+
+function deleteTableIfEmpty() {
+    if ((numCols == 0) || (numRows == 0)) {
+        document.getElementById("grid").innerHTML = "";
+        numCols = 0;
+        numRows = 0;
+    }
 }
 
 // Set global variable for selected color
