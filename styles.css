@@ -1,13 +1,16 @@
-tr,td{
+tr, td{
     border:1px;
     border-style: solid;
 }
+
 td{
     height: 50px;
     width: 50px;
 }
 
+/* Set the color of a table cell to the corresponding class color */
 td.Uncolored {
+    /* default class for new table cells*/
     background-color: white;
 }
 td.Red {
