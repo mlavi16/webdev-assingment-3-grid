@@ -7,8 +7,9 @@ let colorSelected;
 function addR() {
     let grid = document.getElementById("grid");
     let newRow = grid.insertRow(numRows); 
-    if (numCols == 0) // if table is empty
+    if (isTableEmpty()) {
         numCols = 1;
+    }
     for (let i = 0; i < numCols; i++) {
         addCell(newRow);
     }
@@ -17,12 +18,12 @@ function addR() {
 
 // Add a column
 function addC() {
-    if (numRows == 0) // if table is empty
+    if (isTableEmpty()) {
         addR();
-    else { // if table has at least one row/column
+    } else { // if table has at least one row/column
         let rows = document.getElementsByTagName("TR"); 
         for (let i = 0; i < numRows; i++) {
-            addCell(rows[i])
+            addCell(rows[i]);
         }
         numCols += 1;
     }
@@ -37,7 +38,7 @@ function addCell(row) {
 
 // Remove a row
 function removeR() {
-    if (numRows > 0) { // if table isn't already empty
+    if (!isTableEmpty()) { // if table isn't already empty
         document.getElementById("grid").deleteRow(-1);
         numRows -= 1;
     }
@@ -46,7 +47,7 @@ function removeR() {
 
 // Remove a column
 function removeC() {
-    if (numCols > 0) { // if table isn't already empty
+    if (!isTableEmpty()) { // if table isn't already empty
         let rows = document.getElementsByTagName("TR"); 
         for (let i = 0; i <numRows; i++) {
             rows[i].deleteCell(-1);
@@ -57,11 +58,15 @@ function removeC() {
 }
 
 function deleteTableIfEmpty() {
-    if ((numCols == 0) || (numRows == 0)) {
+    if (isTableEmpty()) {
         document.getElementById("grid").innerHTML = "";
         numCols = 0;
         numRows = 0;
     }
+}
+
+function isTableEmpty() {
+    return (numCols == 0) || (numRows == 0);
 }
 
 // Set global variable for selected color
@@ -71,14 +76,14 @@ function selectColor(){
 }
 
 // Fill in a selected cell
-function fillCell(){
+function fillCell(event){
     // if a color is not selected, prompt user for a color and do not fill in the cells
     if ((colorSelected == "SELECT") || (colorSelected == undefined)) {
         alert("Please select a color to fill in this cell");
         return;
     }
     // else fill in the cell with the selected color
-    this.className = colorSelected;
+    event.currentTarget.className = colorSelected;
 }
 
 
