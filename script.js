@@ -80,7 +80,16 @@ function fillU(){
 
 // Fill all cells
 function fillAll(){
-    alert("Clicked Fill All"); // Replace this line with your code.
+    // if a color is not selected, prompt user for a color and do not fill in any cells
+    if ((colorSelected == "SELECT") || (colorSelected == undefined)) {
+        alert("Please select a color");
+        return;
+    }
+    // else fill in all cells with selected color
+    let tableCells = document.querySelectorAll("td");
+    for (let i = 0; i < numCols * numRows; i++) { // for every table cell
+        tableCells[i].className = colorSelected; // fill in with the color selected
+    }
 }
 
 // Clear all cells
