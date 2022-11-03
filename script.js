@@ -30,7 +30,10 @@ function addC() {
 
 // Remove a row
 function removeR() {
-    alert("Clicked Remove Row"); // Replace this line with your code.
+    document.getElementById("grid").deleteRow(-1);
+    numRows -= 1;
+    if (numRows == 0) // if all table cells are deleted
+        numCols = 0; // reset columns to zero
 }
 
 // Remove a column
