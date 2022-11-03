@@ -89,5 +89,8 @@ function fillAll(){
 
 // Clear all cells
 function clearAll(){
-    alert("Clicked Clear All"); // Replace this line with your code.
+    let tableCells = document.querySelectorAll("td");
+    for (let i = 0; i < numCols * numRows; i++) { // for every table cell
+        tableCells[i].className = "Uncolored"; // make it uncolored
+    }
 }
