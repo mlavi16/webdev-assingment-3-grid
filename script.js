@@ -1,62 +1,85 @@
 // Declare global variables
-let numRows = 0;
-let numCols = 0;
-let colorSelected; 
+let numRows = 0;  // The number of rows in the grid.
+let numCols = 0;  // The number of columns in the grid.
+let colorSelected;  // The color selected by the user in the dropdown menu.
+let grid = document.getElementById("grid");  // The grid element.
 
 // Add a row
 function addR() {
-    let grid = document.getElementById("grid");
     let newRow = grid.insertRow(numRows); 
-    if (numCols == 0) // if table is empty
+    if (isTableEmpty()) {
+        // When adding the first row, numCols is automatically set to 1.
         numCols = 1;
+    }
+    // Add a cell to each column, to create the new row.
     for (let i = 0; i < numCols; i++) {
         addCell(newRow);
     }
+    // Update numRows var to accurately refluct the number of rows.
     numRows += 1;
 }
 
 // Add a column
 function addC() {
-    if (numRows == 0) // if table is empty
+    if (isTableEmpty()) {
+        // add a row if this is the first row in the table
         addR();
-    else { // if table has at least one row/column
-        let rows = document.getElementsByTagName("TR"); 
+    } else {
+        // else add a cell to all existing rows
+        let rows = grid.querySelectorAll("TR"); 
         for (let i = 0; i < numRows; i++) {
-            addCell(rows[i])
+            addCell(rows[i]);
         }
-        numCols += 1;
+        numCols += 1; // Update numCols var to accurately refluct the number of columns.
     }
 }
 
 // Add a table cell
 function addCell(row) {
-    let cell = row.insertCell(-1);
-    cell.classList.add("Uncolored");
-    cell.addEventListener("click", fillCell);
+    let cell = row.insertCell(-1); // Create a new cell in the given row
+    cell.classList.add("Uncolored"); // Cell color is set to uncolored.
+    cell.addEventListener("click", fillCell); // EventListener is added to cell, so fillCell() is called when clicked.
 }
 
 // Remove a row
 function removeR() {
-    if (numRows > 0) { // if table isn't already empty
-        document.getElementById("grid").deleteRow(-1);
-        numRows -= 1;
+    if (!isTableEmpty()) {
+        // Remove a row if the table is not already empty
+        grid.deleteRow(-1);
+        numRows -= 1; // Update numRows var to accurately refluct the number of rows.
+    } else {
+        // Else update html to be reflect having an empty table
+        // (so the grid itself and the numCol/numRow counts agree)
+        emptyTable()
     }
-    if (numRows == 0) // if table (rows) are empty
-        numCols = 0; // empty table (cols) as well
-
 }
 
 // Remove a column
 function removeC() {
-    if (numCols > 0) { // if table isn't already empty
-        let rows = document.getElementsByTagName("TR"); 
+    if (!isTableEmpty()) {
+        // If the table is not empty, delete a cell from all existing rows
+        let rows = grid.querySelectorAll("TR"); 
         for (let i = 0; i <numRows; i++) {
             rows[i].deleteCell(-1);
         }
-        numCols -= 1;
+        numCols -= 1; // Update numCols var to accurately refluct the number of columns.
+    } else {
+        // Else update html to be reflect having an empty table 
+        // (so the grid itself and the numCol/numRow counts agree)
+        emptyTable();
     }
-    if (numCols == 0) // if table (cols) are empty
-        numRows = 0; // empty table (rows) as well
+}
+
+// Remove all table rows and columns
+function emptyTable() {
+        grid.innerHTML = "";
+        numCols = 0;
+        numRows = 0;
+}
+
+// Check if the table is empty based on row/column counts
+function isTableEmpty() {
+    return (numCols == 0) || (numRows == 0);
 }
 
 // Set global variable for selected color
@@ -66,14 +89,14 @@ function selectColor(){
 }
 
 // Fill in a selected cell
-function fillCell(){
+function fillCell(event){
     // if a color is not selected, prompt user for a color and do not fill in the cells
     if ((colorSelected == "SELECT") || (colorSelected == undefined)) {
         alert("Please select a color to fill in this cell");
         return;
     }
     // else fill in the cell with the selected color
-    this.className = colorSelected;
+    event.currentTarget.className = colorSelected;
 }
 
 
@@ -84,7 +107,7 @@ function fillU(){
         alert("Please select a color to fill in all uncolored cells");
         return;
     }
-    let uncoloredCells = document.querySelectorAll("td.Uncolored");
+    let uncoloredCells = grid.querySelectorAll("td.Uncolored");
     for (let i = 0; i < uncoloredCells.length; i++) { // for every unfilled table cell
         uncoloredCells[i].className = colorSelected; // fill in with the color selected
     }
@@ -99,7 +122,7 @@ function fillAll(){
         return;
     }
     // else fill in all cells with selected color
-    let tableCells = document.querySelectorAll("td");
+    let tableCells = grid.querySelectorAll("td");
     for (let i = 0; i < numCols * numRows; i++) { // for every table cell
         tableCells[i].className = colorSelected; // fill in with the color selected
     }
@@ -107,7 +130,7 @@ function fillAll(){
 
 // Clear all cells
 function clearAll(){
-    let tableCells = document.querySelectorAll("td");
+    let tableCells = grid.querySelectorAll("td");
     for (let i = 0; i < numCols * numRows; i++) { // for every table cell
         tableCells[i].className = "Uncolored"; // make it uncolored
     }
