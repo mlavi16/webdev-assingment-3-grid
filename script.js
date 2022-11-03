@@ -17,7 +17,15 @@ function addR() {
 
 // Add a column
 function addC() {
-    alert("Clicked Add Col"); // Replace this line with your code.
+    if (numRows == 0) // if table is empty
+        addR();
+    else { // if table has at least one row/column
+        let rows = document.getElementsByTagName("TR"); 
+        for (let i = 0; i < numRows; i++) {
+            rows[i].insertCell(-1);
+        }
+        numCols += 1;
+    }
 }
 
 // Remove a row
